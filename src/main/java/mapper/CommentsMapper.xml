@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CommentsMapper">
+  <resultMap id="BaseResultMap" type="pojo.Comments">
+    <id column="scsid" jdbcType="INTEGER" property="scsid" />
+    <result column="scstype" jdbcType="INTEGER" property="scstype" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="spid" jdbcType="INTEGER" property="spid" />
+    <result column="scdate" jdbcType="TIMESTAMP" property="scdate" />
+    <result column="scconcent" jdbcType="VARCHAR" property="scconcent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    scsid, scstype, uid, spid, scdate, scconcent
+  </sql>
+  <select id="selectByExample" parameterType="pojo.CommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sp_comments
+    where scsid = #{scsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sp_comments
+    where scsid = #{scsid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.CommentsExample">
+    delete from sp_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Comments">
+    insert into sp_comments (scsid, scstype, uid, 
+      spid, scdate, scconcent
+      )
+    values (#{scsid,jdbcType=INTEGER}, #{scstype,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{spid,jdbcType=INTEGER}, #{scdate,jdbcType=TIMESTAMP}, #{scconcent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Comments">
+    insert into sp_comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scsid != null">
+        scsid,
+      </if>
+      <if test="scstype != null">
+        scstype,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="spid != null">
+        spid,
+      </if>
+      <if test="scdate != null">
+        scdate,
+      </if>
+      <if test="scconcent != null">
+        scconcent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scsid != null">
+        #{scsid,jdbcType=INTEGER},
+      </if>
+      <if test="scstype != null">
+        #{scstype,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="scdate != null">
+        #{scdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scconcent != null">
+        #{scconcent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.CommentsExample" resultType="java.lang.Long">
+    select count(*) from sp_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sp_comments
+    <set>
+      <if test="record.scsid != null">
+        scsid = #{record.scsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.scstype != null">
+        scstype = #{record.scstype,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.spid != null">
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.scdate != null">
+        scdate = #{record.scdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.scconcent != null">
+        scconcent = #{record.scconcent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sp_comments
+    set scsid = #{record.scsid,jdbcType=INTEGER},
+      scstype = #{record.scstype,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      spid = #{record.spid,jdbcType=INTEGER},
+      scdate = #{record.scdate,jdbcType=TIMESTAMP},
+      scconcent = #{record.scconcent,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Comments">
+    update sp_comments
+    <set>
+      <if test="scstype != null">
+        scstype = #{scstype,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="scdate != null">
+        scdate = #{scdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scconcent != null">
+        scconcent = #{scconcent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scsid = #{scsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Comments">
+    update sp_comments
+    set scstype = #{scstype,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      spid = #{spid,jdbcType=INTEGER},
+      scdate = #{scdate,jdbcType=TIMESTAMP},
+      scconcent = #{scconcent,jdbcType=VARCHAR}
+    where scsid = #{scsid,jdbcType=INTEGER}
+  </update>
+</mapper>

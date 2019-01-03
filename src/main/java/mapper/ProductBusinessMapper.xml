@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProductBusinessMapper">
+  <resultMap id="BaseResultMap" type="pojo.ProductBusiness">
+    <id column="spbid" jdbcType="INTEGER" property="spbid" />
+    <result column="spbname" jdbcType="VARCHAR" property="spbname" />
+    <result column="spbage" jdbcType="INTEGER" property="spbage" />
+    <result column="spbusername" jdbcType="VARCHAR" property="spbusername" />
+    <result column="spbaddress" jdbcType="VARCHAR" property="spbaddress" />
+    <result column="spbtelephone" jdbcType="INTEGER" property="spbtelephone" />
+    <result column="spbpictures" jdbcType="VARCHAR" property="spbpictures" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    spbid, spbname, spbage, spbusername, spbaddress, spbtelephone, spbpictures
+  </sql>
+  <select id="selectByExample" parameterType="pojo.ProductBusinessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_product_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sp_product_business
+    where spbid = #{spbid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sp_product_business
+    where spbid = #{spbid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.ProductBusinessExample">
+    delete from sp_product_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.ProductBusiness">
+    insert into sp_product_business (spbid, spbname, spbage, 
+      spbusername, spbaddress, spbtelephone, 
+      spbpictures)
+    values (#{spbid,jdbcType=INTEGER}, #{spbname,jdbcType=VARCHAR}, #{spbage,jdbcType=INTEGER}, 
+      #{spbusername,jdbcType=VARCHAR}, #{spbaddress,jdbcType=VARCHAR}, #{spbtelephone,jdbcType=INTEGER}, 
+      #{spbpictures,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.ProductBusiness">
+    insert into sp_product_business
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spbid != null">
+        spbid,
+      </if>
+      <if test="spbname != null">
+        spbname,
+      </if>
+      <if test="spbage != null">
+        spbage,
+      </if>
+      <if test="spbusername != null">
+        spbusername,
+      </if>
+      <if test="spbaddress != null">
+        spbaddress,
+      </if>
+      <if test="spbtelephone != null">
+        spbtelephone,
+      </if>
+      <if test="spbpictures != null">
+        spbpictures,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spbid != null">
+        #{spbid,jdbcType=INTEGER},
+      </if>
+      <if test="spbname != null">
+        #{spbname,jdbcType=VARCHAR},
+      </if>
+      <if test="spbage != null">
+        #{spbage,jdbcType=INTEGER},
+      </if>
+      <if test="spbusername != null">
+        #{spbusername,jdbcType=VARCHAR},
+      </if>
+      <if test="spbaddress != null">
+        #{spbaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="spbtelephone != null">
+        #{spbtelephone,jdbcType=INTEGER},
+      </if>
+      <if test="spbpictures != null">
+        #{spbpictures,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.ProductBusinessExample" resultType="java.lang.Long">
+    select count(*) from sp_product_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sp_product_business
+    <set>
+      <if test="record.spbid != null">
+        spbid = #{record.spbid,jdbcType=INTEGER},
+      </if>
+      <if test="record.spbname != null">
+        spbname = #{record.spbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spbage != null">
+        spbage = #{record.spbage,jdbcType=INTEGER},
+      </if>
+      <if test="record.spbusername != null">
+        spbusername = #{record.spbusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spbaddress != null">
+        spbaddress = #{record.spbaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spbtelephone != null">
+        spbtelephone = #{record.spbtelephone,jdbcType=INTEGER},
+      </if>
+      <if test="record.spbpictures != null">
+        spbpictures = #{record.spbpictures,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sp_product_business
+    set spbid = #{record.spbid,jdbcType=INTEGER},
+      spbname = #{record.spbname,jdbcType=VARCHAR},
+      spbage = #{record.spbage,jdbcType=INTEGER},
+      spbusername = #{record.spbusername,jdbcType=VARCHAR},
+      spbaddress = #{record.spbaddress,jdbcType=VARCHAR},
+      spbtelephone = #{record.spbtelephone,jdbcType=INTEGER},
+      spbpictures = #{record.spbpictures,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.ProductBusiness">
+    update sp_product_business
+    <set>
+      <if test="spbname != null">
+        spbname = #{spbname,jdbcType=VARCHAR},
+      </if>
+      <if test="spbage != null">
+        spbage = #{spbage,jdbcType=INTEGER},
+      </if>
+      <if test="spbusername != null">
+        spbusername = #{spbusername,jdbcType=VARCHAR},
+      </if>
+      <if test="spbaddress != null">
+        spbaddress = #{spbaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="spbtelephone != null">
+        spbtelephone = #{spbtelephone,jdbcType=INTEGER},
+      </if>
+      <if test="spbpictures != null">
+        spbpictures = #{spbpictures,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where spbid = #{spbid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.ProductBusiness">
+    update sp_product_business
+    set spbname = #{spbname,jdbcType=VARCHAR},
+      spbage = #{spbage,jdbcType=INTEGER},
+      spbusername = #{spbusername,jdbcType=VARCHAR},
+      spbaddress = #{spbaddress,jdbcType=VARCHAR},
+      spbtelephone = #{spbtelephone,jdbcType=INTEGER},
+      spbpictures = #{spbpictures,jdbcType=VARCHAR}
+    where spbid = #{spbid,jdbcType=INTEGER}
+  </update>
+</mapper>

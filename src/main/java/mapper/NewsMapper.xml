@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="pojo.News">
+    <id column="newid" jdbcType="INTEGER" property="newid" />
+    <result column="newtitle" jdbcType="VARCHAR" property="newtitle" />
+    <result column="newcontent" jdbcType="VARCHAR" property="newcontent" />
+    <result column="newcreatetime" jdbcType="TIMESTAMP" property="newcreatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    newid, newtitle, newcontent, newcreatetime
+  </sql>
+  <select id="selectByExample" parameterType="pojo.NewsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from im_news
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from im_news
+    where newid = #{newid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from im_news
+    where newid = #{newid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.NewsExample">
+    delete from im_news
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.News">
+    insert into im_news (newid, newtitle, newcontent, 
+      newcreatetime)
+    values (#{newid,jdbcType=INTEGER}, #{newtitle,jdbcType=VARCHAR}, #{newcontent,jdbcType=VARCHAR}, 
+      #{newcreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.News">
+    insert into im_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newid != null">
+        newid,
+      </if>
+      <if test="newtitle != null">
+        newtitle,
+      </if>
+      <if test="newcontent != null">
+        newcontent,
+      </if>
+      <if test="newcreatetime != null">
+        newcreatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newid != null">
+        #{newid,jdbcType=INTEGER},
+      </if>
+      <if test="newtitle != null">
+        #{newtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newcontent != null">
+        #{newcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="newcreatetime != null">
+        #{newcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.NewsExample" resultType="java.lang.Long">
+    select count(*) from im_news
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update im_news
+    <set>
+      <if test="record.newid != null">
+        newid = #{record.newid,jdbcType=INTEGER},
+      </if>
+      <if test="record.newtitle != null">
+        newtitle = #{record.newtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newcontent != null">
+        newcontent = #{record.newcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newcreatetime != null">
+        newcreatetime = #{record.newcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update im_news
+    set newid = #{record.newid,jdbcType=INTEGER},
+      newtitle = #{record.newtitle,jdbcType=VARCHAR},
+      newcontent = #{record.newcontent,jdbcType=VARCHAR},
+      newcreatetime = #{record.newcreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.News">
+    update im_news
+    <set>
+      <if test="newtitle != null">
+        newtitle = #{newtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newcontent != null">
+        newcontent = #{newcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="newcreatetime != null">
+        newcreatetime = #{newcreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where newid = #{newid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.News">
+    update im_news
+    set newtitle = #{newtitle,jdbcType=VARCHAR},
+      newcontent = #{newcontent,jdbcType=VARCHAR},
+      newcreatetime = #{newcreatetime,jdbcType=TIMESTAMP}
+    where newid = #{newid,jdbcType=INTEGER}
+  </update>
+</mapper>

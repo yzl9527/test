@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DetailMapper">
+  <resultMap id="BaseResultMap" type="pojo.Detail">
+    <id column="sodid" jdbcType="INTEGER" property="sodid" />
+    <result column="soid" jdbcType="VARCHAR" property="soid" />
+    <result column="spid" jdbcType="INTEGER" property="spid" />
+    <result column="sodquantity" jdbcType="INTEGER" property="sodquantity" />
+    <result column="sodcost" jdbcType="DECIMAL" property="sodcost" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sodid, soid, spid, sodquantity, sodcost
+  </sql>
+  <select id="selectByExample" parameterType="pojo.DetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sp_order_detail
+    where sodid = #{sodid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sp_order_detail
+    where sodid = #{sodid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.DetailExample">
+    delete from sp_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Detail">
+    insert into sp_order_detail (sodid, soid, spid, 
+      sodquantity, sodcost)
+    values (#{sodid,jdbcType=INTEGER}, #{soid,jdbcType=VARCHAR}, #{spid,jdbcType=INTEGER}, 
+      #{sodquantity,jdbcType=INTEGER}, #{sodcost,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Detail">
+    insert into sp_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sodid != null">
+        sodid,
+      </if>
+      <if test="soid != null">
+        soid,
+      </if>
+      <if test="spid != null">
+        spid,
+      </if>
+      <if test="sodquantity != null">
+        sodquantity,
+      </if>
+      <if test="sodcost != null">
+        sodcost,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sodid != null">
+        #{sodid,jdbcType=INTEGER},
+      </if>
+      <if test="soid != null">
+        #{soid,jdbcType=VARCHAR},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="sodquantity != null">
+        #{sodquantity,jdbcType=INTEGER},
+      </if>
+      <if test="sodcost != null">
+        #{sodcost,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.DetailExample" resultType="java.lang.Long">
+    select count(*) from sp_order_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sp_order_detail
+    <set>
+      <if test="record.sodid != null">
+        sodid = #{record.sodid,jdbcType=INTEGER},
+      </if>
+      <if test="record.soid != null">
+        soid = #{record.soid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spid != null">
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sodquantity != null">
+        sodquantity = #{record.sodquantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.sodcost != null">
+        sodcost = #{record.sodcost,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sp_order_detail
+    set sodid = #{record.sodid,jdbcType=INTEGER},
+      soid = #{record.soid,jdbcType=VARCHAR},
+      spid = #{record.spid,jdbcType=INTEGER},
+      sodquantity = #{record.sodquantity,jdbcType=INTEGER},
+      sodcost = #{record.sodcost,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Detail">
+    update sp_order_detail
+    <set>
+      <if test="soid != null">
+        soid = #{soid,jdbcType=VARCHAR},
+      </if>
+      <if test="spid != null">
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="sodquantity != null">
+        sodquantity = #{sodquantity,jdbcType=INTEGER},
+      </if>
+      <if test="sodcost != null">
+        sodcost = #{sodcost,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where sodid = #{sodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Detail">
+    update sp_order_detail
+    set soid = #{soid,jdbcType=VARCHAR},
+      spid = #{spid,jdbcType=INTEGER},
+      sodquantity = #{sodquantity,jdbcType=INTEGER},
+      sodcost = #{sodcost,jdbcType=DECIMAL}
+    where sodid = #{sodid,jdbcType=INTEGER}
+  </update>
+</mapper>

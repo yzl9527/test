@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StockMapper">
+  <resultMap id="BaseResultMap" type="pojo.Stock">
+    <id column="ssid" jdbcType="INTEGER" property="ssid" />
+    <result column="spid" jdbcType="INTEGER" property="spid" />
+    <result column="ssnumber" jdbcType="INTEGER" property="ssnumber" />
+    <result column="ssdate" jdbcType="TIMESTAMP" property="ssdate" />
+    <result column="ssaddnumber" jdbcType="INTEGER" property="ssaddnumber" />
+    <result column="ssaddtime" jdbcType="TIMESTAMP" property="ssaddtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ssid, spid, ssnumber, ssdate, ssaddnumber, ssaddtime
+  </sql>
+  <select id="selectByExample" parameterType="pojo.StockExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sp_stock
+    where ssid = #{ssid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sp_stock
+    where ssid = #{ssid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.StockExample">
+    delete from sp_stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Stock">
+    insert into sp_stock (ssid, spid, ssnumber, 
+      ssdate, ssaddnumber, ssaddtime
+      )
+    values (#{ssid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, #{ssnumber,jdbcType=INTEGER}, 
+      #{ssdate,jdbcType=TIMESTAMP}, #{ssaddnumber,jdbcType=INTEGER}, #{ssaddtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Stock">
+    insert into sp_stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ssid != null">
+        ssid,
+      </if>
+      <if test="spid != null">
+        spid,
+      </if>
+      <if test="ssnumber != null">
+        ssnumber,
+      </if>
+      <if test="ssdate != null">
+        ssdate,
+      </if>
+      <if test="ssaddnumber != null">
+        ssaddnumber,
+      </if>
+      <if test="ssaddtime != null">
+        ssaddtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ssid != null">
+        #{ssid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="ssnumber != null">
+        #{ssnumber,jdbcType=INTEGER},
+      </if>
+      <if test="ssdate != null">
+        #{ssdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssaddnumber != null">
+        #{ssaddnumber,jdbcType=INTEGER},
+      </if>
+      <if test="ssaddtime != null">
+        #{ssaddtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.StockExample" resultType="java.lang.Long">
+    select count(*) from sp_stock
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sp_stock
+    <set>
+      <if test="record.ssid != null">
+        ssid = #{record.ssid,jdbcType=INTEGER},
+      </if>
+      <if test="record.spid != null">
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ssnumber != null">
+        ssnumber = #{record.ssnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ssdate != null">
+        ssdate = #{record.ssdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ssaddnumber != null">
+        ssaddnumber = #{record.ssaddnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ssaddtime != null">
+        ssaddtime = #{record.ssaddtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sp_stock
+    set ssid = #{record.ssid,jdbcType=INTEGER},
+      spid = #{record.spid,jdbcType=INTEGER},
+      ssnumber = #{record.ssnumber,jdbcType=INTEGER},
+      ssdate = #{record.ssdate,jdbcType=TIMESTAMP},
+      ssaddnumber = #{record.ssaddnumber,jdbcType=INTEGER},
+      ssaddtime = #{record.ssaddtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Stock">
+    update sp_stock
+    <set>
+      <if test="spid != null">
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="ssnumber != null">
+        ssnumber = #{ssnumber,jdbcType=INTEGER},
+      </if>
+      <if test="ssdate != null">
+        ssdate = #{ssdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ssaddnumber != null">
+        ssaddnumber = #{ssaddnumber,jdbcType=INTEGER},
+      </if>
+      <if test="ssaddtime != null">
+        ssaddtime = #{ssaddtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ssid = #{ssid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Stock">
+    update sp_stock
+    set spid = #{spid,jdbcType=INTEGER},
+      ssnumber = #{ssnumber,jdbcType=INTEGER},
+      ssdate = #{ssdate,jdbcType=TIMESTAMP},
+      ssaddnumber = #{ssaddnumber,jdbcType=INTEGER},
+      ssaddtime = #{ssaddtime,jdbcType=TIMESTAMP}
+    where ssid = #{ssid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AddressMapper">
+  <resultMap id="BaseResultMap" type="pojo.Address">
+    <id column="said" jdbcType="INTEGER" property="said" />
+    <result column="saname" jdbcType="VARCHAR" property="saname" />
+    <result column="sacode" jdbcType="VARCHAR" property="sacode" />
+    <result column="provinceid" jdbcType="VARCHAR" property="provinceid" />
+    <result column="cityid" jdbcType="VARCHAR" property="cityid" />
+    <result column="areaid" jdbcType="VARCHAR" property="areaid" />
+    <result column="saaddress" jdbcType="VARCHAR" property="saaddress" />
+    <result column="saphone" jdbcType="VARCHAR" property="saphone" />
+    <result column="imid" jdbcType="INTEGER" property="imid" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    said, saname, sacode, provinceid, cityid, areaid, saaddress, saphone, imid, created, 
+    updated
+  </sql>
+  <select id="selectByExample" parameterType="pojo.AddressExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from im_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from im_address
+    where said = #{said,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from im_address
+    where said = #{said,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.AddressExample">
+    delete from im_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Address">
+    insert into im_address (said, saname, sacode, 
+      provinceid, cityid, areaid, 
+      saaddress, saphone, imid, 
+      created, updated)
+    values (#{said,jdbcType=INTEGER}, #{saname,jdbcType=VARCHAR}, #{sacode,jdbcType=VARCHAR}, 
+      #{provinceid,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, #{areaid,jdbcType=VARCHAR}, 
+      #{saaddress,jdbcType=VARCHAR}, #{saphone,jdbcType=VARCHAR}, #{imid,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Address">
+    insert into im_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="said != null">
+        said,
+      </if>
+      <if test="saname != null">
+        saname,
+      </if>
+      <if test="sacode != null">
+        sacode,
+      </if>
+      <if test="provinceid != null">
+        provinceid,
+      </if>
+      <if test="cityid != null">
+        cityid,
+      </if>
+      <if test="areaid != null">
+        areaid,
+      </if>
+      <if test="saaddress != null">
+        saaddress,
+      </if>
+      <if test="saphone != null">
+        saphone,
+      </if>
+      <if test="imid != null">
+        imid,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="said != null">
+        #{said,jdbcType=INTEGER},
+      </if>
+      <if test="saname != null">
+        #{saname,jdbcType=VARCHAR},
+      </if>
+      <if test="sacode != null">
+        #{sacode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceid != null">
+        #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="saaddress != null">
+        #{saaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="saphone != null">
+        #{saphone,jdbcType=VARCHAR},
+      </if>
+      <if test="imid != null">
+        #{imid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.AddressExample" resultType="java.lang.Long">
+    select count(*) from im_address
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update im_address
+    <set>
+      <if test="record.said != null">
+        said = #{record.said,jdbcType=INTEGER},
+      </if>
+      <if test="record.saname != null">
+        saname = #{record.saname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sacode != null">
+        sacode = #{record.sacode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceid != null">
+        provinceid = #{record.provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityid != null">
+        cityid = #{record.cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaid != null">
+        areaid = #{record.areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saaddress != null">
+        saaddress = #{record.saaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saphone != null">
+        saphone = #{record.saphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imid != null">
+        imid = #{record.imid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null">
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null">
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update im_address
+    set said = #{record.said,jdbcType=INTEGER},
+      saname = #{record.saname,jdbcType=VARCHAR},
+      sacode = #{record.sacode,jdbcType=VARCHAR},
+      provinceid = #{record.provinceid,jdbcType=VARCHAR},
+      cityid = #{record.cityid,jdbcType=VARCHAR},
+      areaid = #{record.areaid,jdbcType=VARCHAR},
+      saaddress = #{record.saaddress,jdbcType=VARCHAR},
+      saphone = #{record.saphone,jdbcType=VARCHAR},
+      imid = #{record.imid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Address">
+    update im_address
+    <set>
+      <if test="saname != null">
+        saname = #{saname,jdbcType=VARCHAR},
+      </if>
+      <if test="sacode != null">
+        sacode = #{sacode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceid != null">
+        provinceid = #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        cityid = #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="saaddress != null">
+        saaddress = #{saaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="saphone != null">
+        saphone = #{saphone,jdbcType=VARCHAR},
+      </if>
+      <if test="imid != null">
+        imid = #{imid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where said = #{said,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Address">
+    update im_address
+    set saname = #{saname,jdbcType=VARCHAR},
+      sacode = #{sacode,jdbcType=VARCHAR},
+      provinceid = #{provinceid,jdbcType=VARCHAR},
+      cityid = #{cityid,jdbcType=VARCHAR},
+      areaid = #{areaid,jdbcType=VARCHAR},
+      saaddress = #{saaddress,jdbcType=VARCHAR},
+      saphone = #{saphone,jdbcType=VARCHAR},
+      imid = #{imid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where said = #{said,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ShoppingcarMapper">
+  <resultMap id="BaseResultMap" type="pojo.Shoppingcar">
+    <id column="scid" jdbcType="INTEGER" property="scid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="spid" jdbcType="INTEGER" property="spid" />
+    <result column="xiaoji" jdbcType="INTEGER" property="xiaoji" />
+    <result column="Count" jdbcType="INTEGER" property="count" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    scid, uid, spid, xiaoji, Count
+  </sql>
+  <select id="selectByExample" parameterType="pojo.ShoppingcarExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_shoppingcar
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sp_shoppingcar
+    where scid = #{scid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sp_shoppingcar
+    where scid = #{scid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="pojo.ShoppingcarExample">
+    delete from sp_shoppingcar
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="pojo.Shoppingcar">
+    insert into sp_shoppingcar (scid, uid, spid, 
+      xiaoji, Count)
+    values (#{scid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{spid,jdbcType=INTEGER}, 
+      #{xiaoji,jdbcType=INTEGER}, #{count,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.Shoppingcar">
+    insert into sp_shoppingcar
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scid != null">
+        scid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="spid != null">
+        spid,
+      </if>
+      <if test="xiaoji != null">
+        xiaoji,
+      </if>
+      <if test="count != null">
+        Count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scid != null">
+        #{scid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="xiaoji != null">
+        #{xiaoji,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="pojo.ShoppingcarExample" resultType="java.lang.Long">
+    select count(*) from sp_shoppingcar
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sp_shoppingcar
+    <set>
+      <if test="record.scid != null">
+        scid = #{record.scid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.spid != null">
+        spid = #{record.spid,jdbcType=INTEGER},
+      </if>
+      <if test="record.xiaoji != null">
+        xiaoji = #{record.xiaoji,jdbcType=INTEGER},
+      </if>
+      <if test="record.count != null">
+        Count = #{record.count,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sp_shoppingcar
+    set scid = #{record.scid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      spid = #{record.spid,jdbcType=INTEGER},
+      xiaoji = #{record.xiaoji,jdbcType=INTEGER},
+      Count = #{record.count,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.Shoppingcar">
+    update sp_shoppingcar
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="spid != null">
+        spid = #{spid,jdbcType=INTEGER},
+      </if>
+      <if test="xiaoji != null">
+        xiaoji = #{xiaoji,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        Count = #{count,jdbcType=INTEGER},
+      </if>
+    </set>
+    where scid = #{scid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.Shoppingcar">
+    update sp_shoppingcar
+    set uid = #{uid,jdbcType=INTEGER},
+      spid = #{spid,jdbcType=INTEGER},
+      xiaoji = #{xiaoji,jdbcType=INTEGER},
+      Count = #{count,jdbcType=INTEGER}
+    where scid = #{scid,jdbcType=INTEGER}
+  </update>
+</mapper>

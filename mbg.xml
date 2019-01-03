@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/immediatebuy" userId="root"
+			password="root">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- pojo生成的地方 -->
+		<javaModelGenerator targetPackage="pojo"
+			targetProject="src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- sql映射文件生成的地方 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- dao接口生成的地方 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="dao" targetProject="src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!-- 只要是数据库对应的pojo，我们都以T开头 -->
+		<!-- 指定要逆向的每一张表,用户表 -->
+		<table tableName="im_address" domainObjectName="Address"></table>
+		<table tableName="im_areas" domainObjectName="Areas"></table>
+		<table tableName="im_cities" domainObjectName="Cities"></table>
+		<table tableName="im_collect" domainObjectName="Collect"></table>
+		<table tableName="im_news" domainObjectName="News"></table>
+		<table tableName="im_provinces" domainObjectName="Provinces"></table>
+		<table tableName="im_user" domainObjectName="User"></table>
+		<table tableName="sp_brand" domainObjectName="Brand"></table>
+		<table tableName="sp_color" domainObjectName="Color"></table>
+		<table tableName="sp_comments" domainObjectName="Comments"></table>
+		<table tableName="sp_order" domainObjectName="Order"></table>
+		<table tableName="sp_order_detail" domainObjectName="Detail"></table>
+		<table tableName="sp_product" domainObjectName="Product"></table>
+		<table tableName="sp_product_brand" domainObjectName="ProductBrand"></table>
+		<table tableName="sp_product_business" domainObjectName="ProductBusiness"></table>
+		<table tableName="sp_product_category" domainObjectName="ProductCategory"></table>
+		<table tableName="sp_product_color" domainObjectName="ProductColor"></table>
+		<table tableName="sp_product_picture" domainObjectName="ProductPicture"></table>
+		<table tableName="sp_product_size" domainObjectName="ProductSize"></table>
+		<table tableName="sp_shoppingcar" domainObjectName="Shoppingcar"></table>
+		<table tableName="sp_size" domainObjectName="Size"></table>
+		<table tableName="sp_stock" domainObjectName="Stock"></table>
+		
+
+	</context>
+</generatorConfiguration>
